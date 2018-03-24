@@ -1,0 +1,27 @@
+{
+  "name": "shoemania",
+  "version": "1.0.0",
+  "description": "Shoemania cs411 project",
+  "authors": "Matthew Cheung",
+  "scripts": {
+    "start": "nodemon --exec node server.js"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.15.3",
+    "express-validator": "^4.3.0",
+    "mongoose": "^4.13.6",
+    "nodemon": "^1.12.5",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
+}

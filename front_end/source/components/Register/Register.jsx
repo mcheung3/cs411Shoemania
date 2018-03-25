@@ -62,6 +62,9 @@ class Register extends Component {
 		if(this.state.redirect) {
 	        return (<Redirect to={"/"} />);
 	    }
+	   	if(localStorage.getItem('username') != null){
+	    	return (<Redirect to={"/"} />);
+	    }
 		return(
 			<div>     
 				<div className="Login">

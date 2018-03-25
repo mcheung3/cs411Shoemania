@@ -1,0 +1,40 @@
+.Header{
+	width: 100%;
+	position: fixed;
+	z-index: 1;
+}
+
+.Header h1{
+	position: absolute;
+	top: 10px;
+	left: 5%;
+	font-size: 48px;
+	color: white;
+}
+
+.trap{
+	width: 490px;
+	height: 100px;
+	border-top: 100px solid #ffffff;
+	border-left: 100px solid transparent;
+	position: absolute;
+	right: 0;
+}
+
+.links{
+	position: absolute;
+	top: -56px;
+	left: -50px;
+	transform: translateY(-50%);
+	font-size: 30px;
+}
+
+.divider{
+	font-size: 32px;
+	color: #13294b;
+}
+
+.links a{
+	margin: 16px;
+	color: #13294b;
+}

@@ -7,13 +7,17 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Container, Divider, Grid, Input } from 'semantic-ui-react';
 
+import Header from '../Header/Header.jsx'
 
 class App extends Component {
 
 
 	render(){
 		return( 
+				<div>
+				<Header></Header>
 				<div>Cs 411 Shoemania project</div>
+				</div>
 	    	);
 	}
 

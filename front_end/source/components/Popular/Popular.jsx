@@ -3,13 +3,13 @@ import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Form, Grid, Image, Message, Segment } from 'semantic-ui-react'
 //import LinkedStateMixin from 'react-linked-state-adapter';
-import styles from './Profile.scss'
+import styles from './Popular.scss'
 import axios from 'axios'
 import { Redirect } from 'react-router'
 import Header from '../Header/Header.jsx'
 
 
-class Profile extends Component {
+class Popular extends Component {
 	
 	constructor(props) {
 		super(props);
@@ -27,11 +27,11 @@ class Profile extends Component {
 		return( 
 				<div>
 				<Header></Header>
-				<div>Profile Page</div>
+				<div>Popular Page</div>
 				</div>
 	    	);
 	}
 
 }
 
-export default Profile
+export default Popular

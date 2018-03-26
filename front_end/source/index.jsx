@@ -11,6 +11,8 @@ import Login from './Components/Login/Login.jsx'
 import Register from './Components/Register/Register.jsx'
 import Browse from './Components/Browse/Browse.jsx'
 import Profile from './Components/Profile/Profile.jsx'
+import Shoemania from './Components/Shoemania/Shoemania.jsx'
+import Popular from './Components/Popular/Popular.jsx'
 
 
 
@@ -20,12 +22,14 @@ require('./styles/main.scss')
 
 render(
         <Router> 
-        	<div>
-        		<Route exact path="/" render={(props) => ( localStorage.getItem('username') != null ? (<App/>) : (<Redirect to="/login"/>))}/>
+        	<div className='wrapper'>
+        		<Route exact path="/" render={(props) => ( localStorage.getItem('username') != null ? (<Redirect to="/browse"/>) : (<Redirect to="/login"/>))}/>
         		<Route path="/login" component={Login} />
         		<Route path="/register" component={Register} />
         		<Route path="/browse" component={Browse} />
         		<Route path="/profile" component={Profile} />
+                        <Route path="/shoemania" component={Shoemania} />
+                        <Route path="/popular" component={Popular} />
         	</div>
         </Router>
         , document.getElementById('app')

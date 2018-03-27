@@ -23,8 +23,9 @@ router.post('/', function(req, res, next) {
     });  
 });  
 
-router.delete('/', function(req, res, next) {  
-    Wishlist.deleteItemFromWishlist(req.body, function(err, count) {  
+router.delete('/', function(req, res, next) {
+    console.log(req);  
+    Wishlist.deleteItemFromWishlist(req.query, function(err, count) {  
         if (err) {  
             res.json(err);  
         } else {  

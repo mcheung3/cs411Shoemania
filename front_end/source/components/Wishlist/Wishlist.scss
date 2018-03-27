@@ -1,0 +1,44 @@
+#wishtlistTitle{
+	width: 100%;
+    margin: 0 !important;
+    position: absolute;
+    top: 13%;
+    text-align: center;
+    font-size: 64px;
+    color: white;
+}
+
+.WishlistImage {
+	width: 300px;
+	margin: auto;
+	display:block;
+}
+
+h3 {
+	color: white;
+	text-align: center;
+	margin: 10px;
+}
+
+.WishlistContainer {
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	justify-content: center;
+	flex-wrap: wrap;
+	top: 30%;
+	position: absolute;
+  	width: 100%;
+  	align-items: center;
+}
+
+.WishlistGalleryItem {
+	margin-left: 20px;
+	margin-right: 10px;
+	width: 350px;
+}
+
+#rsb {
+	display: block;
+	margin: auto;
+}

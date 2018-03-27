@@ -20,6 +20,8 @@ class Location extends Component {
 			changed: false
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.renderData = this.renderData.bind(this);
+
  	 }
 
 	componentDidMount(){

@@ -34,6 +34,7 @@ class Shoemania extends Component {
 	}
 
 	handleLikeClick(event) {
+		event.preventDefault();
 		var postData = {
 		  username: localStorage.getItem('username'),
 		  shoe_id: this.state.data.data.id,
@@ -79,6 +80,7 @@ class Shoemania extends Component {
 
 
     handleDislikeClick(event) {
+    	event.preventDefault();
 		var postData = {
 		  username: localStorage.getItem('username'),
 		  shoe_id: this.state.data.data.id,
@@ -166,11 +168,14 @@ class Shoemania extends Component {
 	    	return (<Redirect to={"/"} />);
 	    }
 		return( 
-				<div>
+				<div className='BrowserWrapper'>
 				<Header></Header>
+				<div className='Browse'>
+				<div className='transparentBlue'></div>
         			<div className="Display">
         				{this.renderData()}
         			</div>
+        		</div>
 				</div>
 	    	);
 	}

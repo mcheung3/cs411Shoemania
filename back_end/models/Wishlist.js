@@ -13,6 +13,7 @@ var Wishlist = {
      	})
 	},
 	deleteItemFromWishlist: function(ShoemaniaStats, callback) {  
+        console.log(ShoemaniaStats.username)
 		return db.query("SELECT id FROM users WHERE users.name = ?", [ShoemaniaStats.username],  function(err, rows) { 
                 db.query("DELETE FROM wishlists where wishlists.user_id=? AND wishlists.shoe_id=?", [rows[0].id ,ShoemaniaStats.shoe_id], callback);
      	}) 

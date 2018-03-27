@@ -13,8 +13,13 @@ import Browse from './Components/Browse/Browse.jsx'
 import Profile from './Components/Profile/Profile.jsx'
 import Shoemania from './Components/Shoemania/Shoemania.jsx'
 import Popular from './Components/Popular/Popular.jsx'
+import Location from './Components/Location/Location.jsx'
+import Wishlist from './Components/Wishlist/Wishlist.jsx'
 
 
+// Know Glitches to Fix:
+// Shoemania has issues with rendering, this.renderData() must be called render for some reason...?
+// Issue with user adding to wishlist then refreshing
 
 require('./styles/main.scss')
 
@@ -30,6 +35,8 @@ render(
         		<Route path="/profile" component={Profile} />
                         <Route path="/shoemania" component={Shoemania} />
                         <Route path="/popular" component={Popular} />
+                        <Route path="/wishlist" component={Wishlist} />
+                        <Route path="/location" component={Location} />
         	</div>
         </Router>
         , document.getElementById('app')

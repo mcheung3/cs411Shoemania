@@ -8,7 +8,10 @@ var Users = {
     },  
     getUserById: function(id, callback) {  
         return db.query("Select * from users where id=?", [id], callback);  
-    },  
+    },
+    getUserByName: function(id, callback) {  
+        return db.query("Select * from users where users.name=?", [id], callback);  
+    },
     addUser: function(User, callback) {  
         return db.query("Insert into users values(?,?,?,?)", [User.id, User.username, User.password, User.location ], callback);  
     },  

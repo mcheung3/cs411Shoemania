@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Form, Grid, Image, Message, Segment } from 'semantic-ui-react'
-//import LinkedStateMixin from 'react-linked-state-adapter';
 import styles from './Shoemania.scss'
 import axios from 'axios'
 import { Redirect } from 'react-router'
@@ -16,7 +15,8 @@ class Shoemania extends Component {
 		
 		this.state = {
 			redirect: false,
-			data: null
+			data: null,
+			addedToWL: false
 		};
 
 		this.renderData = this.renderData.bind(this);
@@ -30,7 +30,7 @@ class Shoemania extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://localhost:3000/shoemania/mcheung3').then(response => {this.setState({data: response})});
+		axios.get('http://localhost:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	handleLikeClick(event) {
@@ -49,7 +49,7 @@ class Shoemania extends Component {
 
 		axios.post('http://localhost:3000/shoemania/', postData, axiosConfig)
 		.then((res) => {
-			axios.get('http://localhost:3000/shoemania/mcheung3').then(response => {this.setState({data: response})});
+			axios.get('http://localhost:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response, addedToWL: false})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);
@@ -57,7 +57,24 @@ class Shoemania extends Component {
 	}
 
 	handleAddToWishlist(event){
+		var postData = {
+		  username: localStorage.getItem('username'),
+		  shoe_id: this.state.data.data.id,
+		};
 
+		let axiosConfig = {
+		  headers: {
+		      'Content-Type': 'application/json;charset=UTF-8',
+		      "Access-Control-Allow-Origin": "*",
+		  }
+		};
+		axios.post('http://localhost:3000/wishlist/', postData, axiosConfig)
+		.then((res) => {
+			this.setState({addedToWL: true});
+		})
+		.catch((err) => {
+		  	console.log("AXIOS ERROR: ", err);
+		})
 	}
 
 
@@ -76,7 +93,7 @@ class Shoemania extends Component {
 		};
 		axios.post('http://localhost:3000/shoemania/', postData, axiosConfig)
 		.then((res) => {
-			axios.get('http://localhost:3000/shoemania/mcheung3').then(response => {this.setState({data: response})});
+			axios.get('http://localhost:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response, addedToWL: false})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);
@@ -86,33 +103,58 @@ class Shoemania extends Component {
  	renderData(){
  		console.log("Here")
 		if( this.state.data != null ){
-			console.log(this.state.data);
-			return (<div className='ShoemaniaFlexer'> 
-						<img className='shoePic' src={this.state.data.data.photo}></img>
-				        <div className='shoeBrand'> {this.state.data.data.brand} </div>
-				        <div className='shoeName'> {this.state.data.data.name} </div>
-						<div className='shoeType'> {this.state.data.data.type} </div>
-						<div className='shoeColor'> {this.state.data.data.color} </div>
-						<div className='shoeDesc'> {this.state.data.data.description} </div>
-						<div className='shoePrice'> {'$' + this.state.data.data.price} </div>
-						<div className='flexer2'>
-								<div className='buttonContainer1'>
-									<Button inverted id='bd' onClick={this.handleDislikeClick}> 
-											Dislike!
-									</Button>
-								</div>
-								<div className='buttonContainer2'>
-									<Button inverted id='bl' onClick={this.handleLikeClick}>
-											Like!
-									</Button>
-								</div>
+			if(this.state.addedToWL){
+				return (<div className='ShoemaniaFlexer'> 
+							<img className='shoePic' src={this.state.data.data.photo}></img>
+					        <div className='shoeBrand'> {this.state.data.data.brand} </div>
+					        <div className='shoeName'> {this.state.data.data.name} </div>
+							<div className='shoeType'> {this.state.data.data.type} </div>
+							<div className='shoeColor'> {this.state.data.data.color} </div>
+							<div className='shoeDesc'> {this.state.data.data.description} </div>
+							<div className='shoePrice'> {'$' + this.state.data.data.price} </div>
+							<div className='flexer2'>
+									<div className='buttonContainer1'>
+										<Button inverted id='bd' onClick={this.handleDislikeClick}> 
+												Dislike!
+										</Button>
+									</div>
+									<div className='buttonContainer2'>
+										<Button inverted id='bl' onClick={this.handleLikeClick}>
+												Like!
+										</Button>
+									</div>
+							</div>
 						</div>
-						<Button inverted id='wl' onClick={this.handleLikeClick}>
-								ADD TO WISHLIST!
-						</Button>
-					</div>
 
-					)
+						)
+			}else{
+				return (<div className='ShoemaniaFlexer'> 
+					<img className='shoePic' src={this.state.data.data.photo}></img>
+			        <div className='shoeBrand'> {this.state.data.data.brand} </div>
+			        <div className='shoeName'> {this.state.data.data.name} </div>
+					<div className='shoeType'> {this.state.data.data.type} </div>
+					<div className='shoeColor'> {this.state.data.data.color} </div>
+					<div className='shoeDesc'> {this.state.data.data.description} </div>
+					<div className='shoePrice'> {'$' + this.state.data.data.price} </div>
+					<div className='flexer2'>
+							<div className='buttonContainer1'>
+								<Button inverted id='bd' onClick={this.handleDislikeClick}> 
+										Dislike!
+								</Button>
+							</div>
+							<div className='buttonContainer2'>
+								<Button inverted id='bl' onClick={this.handleLikeClick}>
+										Like!
+								</Button>
+							</div>
+					</div>
+					<Button inverted id='wl' onClick={this.handleAddToWishlist}>
+							ADD TO WISHLIST!
+					</Button>
+				</div>
+
+				);
+			}
 		}	
  	 }
 
@@ -121,7 +163,7 @@ class Shoemania extends Component {
 	    	return (<Redirect to={"/"} />);
 	    }
 	    if(this.state.redirect){
-	    	return (<Redirect to={"/Shoemania"} />);
+	    	return (<Redirect to={"/"} />);
 	    }
 		return( 
 				<div>

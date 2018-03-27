@@ -18,6 +18,7 @@ require('./auth/passport')(passport);
 var Shoes = require('./routes/Shoe');  
 var Users = require('./routes/User');  
 var Shoemania = require('./routes/Shoemania');
+var Wishlist = require('./routes/Wishlist');
 var Account = require('./routes/Login')(router, passport);
 var app = express();  
 
@@ -56,6 +57,7 @@ app.use('/shoes', Shoes);
 app.use('/account', Account );
 app.use('/users', Users );
 app.use('/shoemania', Shoemania );
+app.use('/wishlist', Wishlist );
 
 // catch 404 and forward to error handler  
 app.use(function(req, res, next) {  

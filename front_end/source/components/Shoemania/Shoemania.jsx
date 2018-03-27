@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Form, Grid, Image, Message, Segment } from 'semantic-ui-react'
 //import LinkedStateMixin from 'react-linked-state-adapter';
@@ -22,6 +22,8 @@ class Shoemania extends Component {
 		this.renderData = this.renderData.bind(this);
     	this.handleLikeClick = this.handleLikeClick.bind(this);
         this.handleDislikeClick = this.handleDislikeClick.bind(this);
+        this.handleAddToWishlist = this.handleAddToWishlist.bind(this);
+
  	 }
 	componentDidMount(){
 		if( localStorage.getItem('username') == null){
@@ -47,12 +49,17 @@ class Shoemania extends Component {
 
 		axios.post('http://localhost:3000/shoemania/', postData, axiosConfig)
 		.then((res) => {
-			this.setState({redirect: true});
+			axios.get('http://localhost:3000/shoemania/mcheung3').then(response => {this.setState({data: response})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);
 		})
 	}
+
+	handleAddToWishlist(event){
+
+	}
+
 
     handleDislikeClick(event) {
 		var postData = {
@@ -69,7 +76,7 @@ class Shoemania extends Component {
 		};
 		axios.post('http://localhost:3000/shoemania/', postData, axiosConfig)
 		.then((res) => {
-			this.setState({redirect: true});
+			axios.get('http://localhost:3000/shoemania/mcheung3').then(response => {this.setState({data: response})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);
@@ -83,23 +90,26 @@ class Shoemania extends Component {
 			return (<div className='ShoemaniaFlexer'> 
 						<img className='shoePic' src={this.state.data.data.photo}></img>
 				        <div className='shoeBrand'> {this.state.data.data.brand} </div>
-						<div className='shoeDesc'> {this.state.data.data.description} </div>
-						<div className='shoeColor'> {this.state.data.data.color} </div>
-						<div className='shoeName'> {this.state.data.data.name} </div>
+				        <div className='shoeName'> {this.state.data.data.name} </div>
 						<div className='shoeType'> {this.state.data.data.type} </div>
+						<div className='shoeColor'> {this.state.data.data.color} </div>
+						<div className='shoeDesc'> {this.state.data.data.description} </div>
 						<div className='shoePrice'> {'$' + this.state.data.data.price} </div>
 						<div className='flexer2'>
 								<div className='buttonContainer1'>
-									<button className="ui inverted button" id='bd' onClick={this.handleDislikeClick}> 
+									<Button inverted id='bd' onClick={this.handleDislikeClick}> 
 											Dislike!
-									</button>
+									</Button>
 								</div>
 								<div className='buttonContainer2'>
-									<button className="ui inverted button" id='bl' onClick={this.handleLikeClick}>
+									<Button inverted id='bl' onClick={this.handleLikeClick}>
 											Like!
-									</button>
+									</Button>
 								</div>
-					</div>
+						</div>
+						<Button inverted id='wl' onClick={this.handleLikeClick}>
+								ADD TO WISHLIST!
+						</Button>
 					</div>
 
 					)

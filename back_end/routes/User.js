@@ -21,7 +21,8 @@ router.get('/:id?', function(req, res, next) {
             }  
         });  
     }  
-});  
+});
+  
 router.post('/', function(req, res, next) {  
     User.addUser(req.body, function(err, count) {  
         if (err) {  

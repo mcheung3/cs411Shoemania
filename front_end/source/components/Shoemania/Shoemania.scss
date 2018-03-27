@@ -1,0 +1,55 @@
+.shoePic {
+	width: 300px;
+	hieght: 100px;
+}
+
+.shoeBrand {
+	color: white;
+}
+
+.shoeDesc {
+	color: white;
+	width: 400px;
+	text-align: center;
+}
+
+.shoeColor {
+	color: white;
+}
+
+.shoeName {
+	color: white;
+}
+
+.shoeType {
+	color: white;
+}
+
+.shoePrice {
+	color: white;
+}
+
+#bd {
+	width: 150px;
+}
+
+#bl {
+	width: 150px;
+}
+
+.ShoemaniaFlexer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  flex-direction: column;
+      align-items: center;
+  top: 20%;
+}
+
+.flexer2 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 15%;
+}

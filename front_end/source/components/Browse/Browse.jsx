@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Form, Grid, Image, Message, Segment } from 'semantic-ui-react'
 //import LinkedStateMixin from 'react-linked-state-adapter';
@@ -47,14 +47,14 @@ class Browse extends Component {
 							<h1>Shoemania</h1>
 							<div className='flexer'>
 								<div className='buttonContainer1'>
-									<button className="ui inverted button" id='b1' onClick={this.handleShoemaniaClick}> 
+									<Button inverted id='b1' onClick={this.handleShoemaniaClick}> 
 											Shoemania!
-									</button>
+									</Button>
 								</div>
 								<div className='buttonContainer2'>
-									<button className="ui inverted button" id='b2' onClick={this.handlePopularClick}>
+									<Button inverted id='b2' onClick={this.handlePopularClick}>
 											Popular!
-									</button>
+									</Button>
 								</div>
 							</div>
 							</div>

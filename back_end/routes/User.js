@@ -21,7 +21,18 @@ router.get('/:id?', function(req, res, next) {
             }  
         });  
     }  
-});  
+});
+
+router.get('/name/:id', function(req, res, next) {  
+    User.getUserByName(req.params.id, function(err, rows) {  
+        if (err) {  
+            res.json(err);  
+        } else {  
+            res.json(rows);  
+        }  
+    });
+});
+  
 router.post('/', function(req, res, next) {  
     User.addUser(req.body, function(err, count) {  
         if (err) {  

@@ -5,6 +5,7 @@ import requests
 import urllib
 import cv2
 import sys
+import time
 
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
@@ -27,11 +28,24 @@ db.close()
 labels = np.array([i[-1] for i in pred])
 shoe_data = np.array([i[:-1] for i in pred])
 
-img_url = shoe_data[0][2]
-url_response = urllib.urlopen(img_url)
-img_array = np.array(bytearray(url_response.read()), dtype=np.uint8)
-img = cv2.imdecode(img_array, -1)
+def get_img_as_arr(shoe_data):
+	data = np.zeros((len(shoe_data), 200, 200, 3))
+	for i in range(len(shoe_data)):
+		url = shoe_data[i][2]
+		url_response = urllib.urlopen(url)
+		img_array = np.array(bytearray(url_response.read()), dtype=np.uint8)
+		img = cv2.imdecode(img_array, -1)
+		resized_image = np.zeros((200, 200, 3))
+		for i in range(3):
+			resized_image[:,:,i] = cv2.resize(img[:,:,i], (200, 200))
+		data[i] = resized_image
+	return data
 
+start = time.time()
+images = get_img_as_arr(shoe_data)
+end = time.time()
+print end - start
+print images.shape
 
 # # The digits dataset
 # digits = datasets.load_digits()

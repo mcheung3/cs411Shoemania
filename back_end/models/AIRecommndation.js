@@ -4,18 +4,19 @@ var AIRecommendation = {
 
 	getAIRecommndation: function(username, callback) {  
 		return db.query("SELECT id FROM users WHERE users.name = ?", [username],  function(err, rows) { 
-			console.log("made it ");
+			console.log("made it");
 			user_id = rows[0].id;
-			var spawn = require("child_process").spawn;
-			var pythonProcess = spawn('python',["../../recommendation/test.py", user_id]);
-			console.log('test1');
-			pythonProcess.stdout.on('data', function (data) {
-				console.log('test2');
-				console.log(data);
-				final_shoe = data;
-				sleep(100);
+			console.log(user_id)
+			var PythonShell = require('python-shell');
+			var options = {
+				scriptPath: '../recommendation/',
+				args: [user_id]
+			};
+			PythonShell.run('classifier.py', options, function (err, results) {
+				if (err) throw err;
+				// results is an array consisting of messages collected during execution
+				console.log('results: %j', results);
 			});
-			console.log('test3'); 
 		});
     }
 };  

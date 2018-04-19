@@ -21,14 +21,14 @@ c = db.cursor()
 # get all shoes rated by users
 c.execute("""
 	SELECT shoes.*, ratedlists.liked FROM shoes, users, ratedlists 
-	WHERE users.name = %s AND users.id = ratedlists.user_id AND shoes.id = ratedlists.shoe_id
+	WHERE users.id = %s AND users.id = ratedlists.user_id AND shoes.id = ratedlists.shoe_id
 	""", (user,))
 pred = c.fetchall()
 
 # get all shoes not rated by users
 c.execute("""
 	SELECT shoes.* FROM shoes, users, ratedlists 
-	WHERE users.name = %s AND users.id NOT IN (SELECT ratedlists.shoe_id FROM ratedlists WHERE users.id = ratedlists.user_id)
+	WHERE users.id = %s AND users.id NOT IN (SELECT ratedlists.shoe_id FROM ratedlists WHERE users.id = ratedlists.user_id)
 	""", (user,))
 notrated = c.fetchall()
 
@@ -76,11 +76,11 @@ def create_json(shoe):
 ## Classify and write to JSON
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
-start = time.time()
+#start = time.time()
 images = get_img_as_arr(shoe_data)
 test_images = get_img_as_arr(test_data)
-end = time.time()
-print(end - start)
+#end = time.time()
+#print(end - start)
 
 n_samples = len(images)
 data = images.reshape((n_samples, -1))
@@ -100,6 +100,4 @@ else:
 
 json_data = create_json(recommended)
 print json_data
-sys.stdout.flush()
-
-
+#sys.stdout.flush()

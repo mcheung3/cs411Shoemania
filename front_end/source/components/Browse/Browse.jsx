@@ -15,19 +15,19 @@ class Browse extends Component {
 		
 		this.state = {
 			shoemania: false,
-			popular: false
+			recommend: false
 		};
 
     	this.handleShoemaniaClick = this.handleShoemaniaClick.bind(this);
-        this.handlePopularClick = this.handlePopularClick.bind(this);
+        this.handleRecommendClick = this.handleRecommendClick.bind(this);
  	 }
 
 	handleShoemaniaClick(event) {
 	    this.setState({shoemania: true});
 	}
 
-    handlePopularClick(event) {
-	    this.setState({popular: true});
+    handleRecommendClick(event) {
+	    this.setState({recommend: true});
 	}
 	render(){
 		if( localStorage.getItem('username') == null){
@@ -36,8 +36,8 @@ class Browse extends Component {
 	   	if( this.state.shoemania ){
 	    	return (<Redirect to={"/shoemania"} />);
 	    }
-	    if( this.state.popular){
-	    	return (<Redirect to={"/popular"} />);
+	    if( this.state.recommend){
+	    	return (<Redirect to={"/recommend"} />);
 	    }
 		return( 
 				<div className='BrowserWrapper'>
@@ -52,8 +52,8 @@ class Browse extends Component {
 									</Button>
 								</div>
 								<div className='buttonContainer2'>
-									<Button inverted id='b2' onClick={this.handlePopularClick}>
-											Popular!
+									<Button inverted id='b2' onClick={this.handleRecommendClick}>
+											Recommend!
 									</Button>
 								</div>
 							</div>

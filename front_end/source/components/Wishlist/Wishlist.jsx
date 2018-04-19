@@ -28,7 +28,7 @@ class Wishlist extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://localhost:3000/wishlist/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+		axios.get('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/wishlist/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	handleRemoveClick(event){
@@ -41,9 +41,9 @@ class Wishlist extends Component {
 		  }
 		};
 
-		axios.delete('http://localhost:3000/wishlist/', {params: {username: localStorage.getItem('username'), shoe_id: event.target.parentElement.parentElement.id}}, axiosConfig)
+		axios.delete('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/wishlist/', {params: {username: localStorage.getItem('username'), shoe_id: event.target.parentElement.parentElement.id}}, axiosConfig)
 		.then((res) => {
-			axios.get('http://localhost:3000/wishlist/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+			axios.get('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/wishlist/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);

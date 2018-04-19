@@ -12,9 +12,13 @@ import Register from './Components/Register/Register.jsx'
 import Browse from './Components/Browse/Browse.jsx'
 import Profile from './Components/Profile/Profile.jsx'
 import Shoemania from './Components/Shoemania/Shoemania.jsx'
-import Popular from './Components/Popular/Popular.jsx'
+import Recommend from './Components/Recommend/Recommend.jsx'
 import Location from './Components/Location/Location.jsx'
 import Wishlist from './Components/Wishlist/Wishlist.jsx'
+import LocationRecommend from './Components/LocationRecommend/LocationRecommend.jsx'
+import PersonalRecommend from './Components/PersonalRecommend/PersonalRecommend.jsx'
+import AiRecommend from './Components/AiRecommend/AiRecommend.jsx'
+
 
 
 // Know Glitches to Fix:
@@ -34,9 +38,12 @@ render(
         		<Route path="/browse" component={Browse} />
         		<Route path="/profile" component={Profile} />
                         <Route path="/shoemania" component={Shoemania} />
-                        <Route path="/popular" component={Popular} />
+                        <Route path="/recommend" component={Recommend} />
                         <Route path="/wishlist" component={Wishlist} />
                         <Route path="/location" component={Location} />
+                        <Route path="/locationRecommend" component={LocationRecommend} />
+                        <Route path="/aiRecommend" component={AiRecommend} />
+                        <Route path="/personalRecommend" component={PersonalRecommend} />
         	</div>
         </Router>
         , document.getElementById('app')

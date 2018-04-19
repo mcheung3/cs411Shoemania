@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import MySQLdb
 import requests
@@ -6,6 +5,8 @@ import urllib
 import cv2
 import sys
 import time
+import random as rnd
+import json
 
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
@@ -14,19 +15,34 @@ user = sys.argv[1]
 db = MySQLdb.connect(host='shoemaniadbinstance.chnenegb17td.us-east-2.rds.amazonaws.com', user='mcheung3',passwd='shoemania', db='shoemania')
 c = db.cursor()
 
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Preprocess data
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 # get all shoes rated by users
 c.execute("""
 	SELECT shoes.*, ratedlists.liked FROM shoes, users, ratedlists 
 	WHERE users.name = %s AND users.id = ratedlists.user_id AND shoes.id = ratedlists.shoe_id
 	""", (user,))
-#c.execute("""SELECT photo FROM shoes""", (shoe_info))
-
 pred = c.fetchall()
+
+# get all shoes not rated by users
+c.execute("""
+	SELECT shoes.* FROM shoes, users, ratedlists 
+	WHERE users.name = %s AND users.id NOT IN (SELECT ratedlists.shoe_id FROM ratedlists WHERE users.id = ratedlists.user_id)
+	""", (user,))
+notrated = c.fetchall()
+
 db.commit()
 db.close()
 
 labels = np.array([i[-1] for i in pred])
 shoe_data = np.array([i[:-1] for i in pred])
+test_data = np.array(pred)
+
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Functions
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 
 def get_img_as_arr(shoe_data):
 	data = np.zeros((len(shoe_data), 200, 200, 3))
@@ -41,52 +57,47 @@ def get_img_as_arr(shoe_data):
 		data[i] = resized_image
 	return data
 
+def create_json(shoe):
+	data = {
+	'id' : shoe[0],
+	'brand' : shoe[1],
+	'photo' : shoe[2],
+	'description' : shoe[3],
+	'color' : shoe[4],
+	'name' : shoe[5],
+	'type' : shoe[6],
+	'price' : shoe[7]
+	}
+	json_data = json.dumps(data)
+	return json_data
+
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Classify and write to JSON
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+
 start = time.time()
 images = get_img_as_arr(shoe_data)
+test_images = get_img_as_arr(test_data)
 end = time.time()
-print end - start
-print images.shape
+print(end - start)
 
-# # The digits dataset
-# digits = datasets.load_digits()
+n_samples = len(images)
+data = images.reshape((n_samples, -1))
+test_data = test_images.reshape((n_samples, -1))
 
-# # The data that we are interested in is made of 8x8 images of digits, let's
-# # have a look at the first 4 images, stored in the `images` attribute of the
-# # dataset.  If we were working from image files, we could load them using
-# # matplotlib.pyplot.imread.  Note that each image must have the same size. For these
-# # images, we know which digit they represent: it is given in the 'target' of
-# # the dataset.
-# images_and_labels = list(zip(digits.images, digits.target))
-# for index, (image, label) in enumerate(images_and_labels[:4]):
-#     plt.subplot(2, 4, index + 1)
-#     plt.axis('off')
-#     plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
-#     plt.title('Training: %i' % label)
+classifier = svm.SVC(gamma=0.001)
 
-# # To apply a classifier on this data, we need to flatten the image, to
-# # turn the data in a (samples, feature) matrix:
-# n_samples = len(digits.images)
-# data = digits.images.reshape((n_samples, -1))
+classifier.fit(data, labels)
 
-# # Create a classifier: a support vector classifier
-# classifier = svm.SVC(gamma=0.001)
+predicted = classifier.predict(test_data)
+pos = np.where(predicted == 1)[0]
+if len(pos) == 0:
+	recommended = notrated[rnd.randint(0, len(notrated)-1)]
+else:
+	idx = rnd.choice(pos)
+	recommended = notrated[idx]
 
-# # We learn the digits on the first half of the digits
-# classifier.fit(data[:n_samples // 2], digits.target[:n_samples // 2])
+json_data = create_json(recommended)
 
-# # Now predict the value of the digit on the second half:
-# expected = digits.target[n_samples // 2:]
-# predicted = classifier.predict(data[n_samples // 2:])
 
-# print("Classification report for classifier %s:\n%s\n"
-#       % (classifier, metrics.classification_report(expected, predicted)))
-# print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
-
-# images_and_predictions = list(zip(digits.images[n_samples // 2:], predicted))
-# for index, (image, prediction) in enumerate(images_and_predictions[:4]):
-#     plt.subplot(2, 4, index + 5)
-#     plt.axis('off')
-#     plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
-#     plt.title('Prediction: %i' % prediction)
-
-# plt.show()

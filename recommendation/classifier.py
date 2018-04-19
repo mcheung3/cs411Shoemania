@@ -1,11 +1,24 @@
-# Author: Gael Varoquaux <gael dot varoquaux at normalesup dot org>
-# License: BSD 3 clause
-
-# Standard scientific Python imports
 import matplotlib.pyplot as plt
+import numpy as np
+import MySQLdb
+import requests
 
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
+
+db = MySQLdb.connect(host='shoemaniadbinstance.chnenegb17td.us-east-2.rds.amazonaws.com', user='mcheung3',passwd='shoemania', db='shoemania')
+c = db.cursor()
+
+# get all shoes rated by users
+c.execute("""
+	SELECT shoes. FROM shoes, users, ratedlists 
+	WHERE users.name = 'mcheung3' AND users.id = ratedlists.userid AND shoes.id = ratedlists.shoe_id
+	""")
+#c.execute("""SELECT photo FROM shoes""", (shoe_info))
+pred = c.fetchall()
+db.commit()
+db.close()
+
 
 # The digits dataset
 digits = datasets.load_digits()

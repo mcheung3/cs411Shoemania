@@ -1,6 +1,6 @@
 var express = require('express');  
 var router = express.Router();  
-var AIRecommendation = require('../models/AIRecommendation');  
+var AIRecommendation = require('../models/AIRecommndation');  
 
 
 router.get('/:id', function(req, res, next) {  

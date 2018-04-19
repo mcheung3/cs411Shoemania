@@ -99,5 +99,7 @@ else:
 	recommended = notrated[idx]
 
 json_data = create_json(recommended)
+print json_data
+sys.stdout.flush()
 
 

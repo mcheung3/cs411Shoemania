@@ -87,7 +87,6 @@ classifier = svm.SVC(gamma=0.001)
 classifier.fit(data, labels)
 
 predicted = classifier.predict(test_data)
-print predicted
 pos = np.where(predicted == 1)[0]
 if len(pos) == 0:
 	recommended = notrated[rnd.randint(0, len(notrated)-1)]

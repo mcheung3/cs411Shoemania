@@ -18,6 +18,7 @@ c = db.cursor()
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 ## Preprocess data
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+
 # get all shoes rated by users
 c.execute("""
 	SELECT shoes.*, ratedlists.liked FROM shoes, users, ratedlists 
@@ -39,7 +40,6 @@ labels = np.array([i[-1] for i in pred])
 shoe_data = np.array([i[:-1] for i in pred])
 test_data = np.array(pred)
 
-
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 ## Functions
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
@@ -51,10 +51,7 @@ def get_img_as_arr(shoe_data):
 		url_response = urllib.urlopen(url)
 		img_array = np.array(bytearray(url_response.read()), dtype=np.uint8)
 		img = cv2.imdecode(img_array, -1)
-		resized_image = np.zeros((200, 200, 3))
-		for i in range(3):
-			resized_image[:,:,i] = cv2.resize(img[:,:,i], (200, 200))
-		data[i] = resized_image
+		data[i] = cv2.resize(img, (200, 200), interpolation=cv2.INTER_LINEAR)
 	return data
 
 def create_json(shoe):
@@ -70,7 +67,6 @@ def create_json(shoe):
 	}
 	json_data = json.dumps(data)
 	return json_data
-
 
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
 ## Classify and write to JSON
@@ -91,6 +87,7 @@ classifier = svm.SVC(gamma=0.001)
 classifier.fit(data, labels)
 
 predicted = classifier.predict(test_data)
+print predicted
 pos = np.where(predicted == 1)[0]
 if len(pos) == 0:
 	recommended = notrated[rnd.randint(0, len(notrated)-1)]

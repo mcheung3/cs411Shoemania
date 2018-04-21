@@ -20,6 +20,7 @@ var Users = require('./routes/User');
 var Shoemania = require('./routes/Shoemania');
 var Wishlist = require('./routes/Wishlist');
 var PersonalRecommend = require('./routes/PersonalRecommendation');
+var LocationRecommend = require('./routes/LocationRecommendation');
 var AIRecommend = require('./routes/AIRecommendation');
 var Account = require('./routes/Login')(router, passport);
 var app = express();  
@@ -62,6 +63,7 @@ app.use('/shoemania', Shoemania );
 app.use('/wishlist', Wishlist );
 app.use('/personalRecommendation', PersonalRecommend );
 app.use('/aiRecommendation', AIRecommend)
+app.use('locationRecommendation', LocationRecommend);
 
 // catch 404 and forward to error handler  
 app.use(function(req, res, next) {  

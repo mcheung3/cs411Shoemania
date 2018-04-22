@@ -6,9 +6,11 @@ var LocationRecommendation = require('../models/LocationRecommendation');
 router.get('/:id', function(req, res, next) {  
     LocationRecommendation.getLocWeathRecommndation(req.params.id, function(err, rows) {  
             if (err) {  
+            	console.log("test2");
                 res.json(err);  
             } else {  
-                res.json(JSON.parse(rows[0]));  
+            	console.log("test3");
+                res.json(rows);  
             }  
      });   
 });  

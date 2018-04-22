@@ -66,7 +66,7 @@ class Location extends Component {
 						<Form id='locationForm' onSubmit={this.handleSubmit}>
 						    <Form.Field>
 						      <label className='formTitle'>Set New Location</label>
-						      <input id='locationid' placeholder='Location...' />
+						      <input id='locationid' placeholder='City, State' />
 						    </Form.Field>
 						    <Button type='submit'>Submit</Button>
 						</Form>
@@ -79,7 +79,7 @@ class Location extends Component {
 						<Form id='locationForm' onSubmit={this.handleSubmit}>
 						    <Form.Field>
 						      <label className='formTitle'>Set Location</label>
-						      <input id='locationid' placeholder='Location...' />
+						      <input id='locationid' placeholder='City, State' />
 						    </Form.Field>
 						    <Button type='submit'>Submit</Button>
 						</Form>

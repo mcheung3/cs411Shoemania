@@ -55,7 +55,7 @@ for i in range(5):
   c.execute("""
       SELECT shoes.*, ratedlists.liked FROM shoes, ratedlists, users
 	  WHERE users.id = %s AND users.id = ratedlists.user_id AND shoes.id = ratedlists.shoe_id
-	  """, ((dist[0])[0],))
+	  """, ((dist[i])[0],))
   shoe = c.fetchall()
   for j in shoe:
     shoes_list.append(j)
@@ -76,6 +76,8 @@ def create_json(shoe):
 	json_data = json.dumps(data)
 	return json_data
 
+
+db.close()
 
 shoe = create_json(shoe)
 

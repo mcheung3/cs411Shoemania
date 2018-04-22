@@ -63,7 +63,7 @@ app.use('/shoemania', Shoemania );
 app.use('/wishlist', Wishlist );
 app.use('/personalRecommendation', PersonalRecommend );
 app.use('/aiRecommendation', AIRecommend)
-app.use('locationRecommendation', LocationRecommend);
+app.use('/locationRecommendation', LocationRecommend);
 
 // catch 404 and forward to error handler  
 app.use(function(req, res, next) {  

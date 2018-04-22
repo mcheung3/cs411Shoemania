@@ -53,7 +53,8 @@ dist.sort(key=lambda x: x[1])
 shoes_list = []
 for i in range(5):
   c.execute("""
-      SELECT shoes.*, ratedlists.liked FROM shoes, ratedlists, users
+      SELECT shoes.*, ratedlists.liked FROM shoes, users
+	  INNER JOIN ratedlists ON users.id = ratedlists.user_id
 	  WHERE users.id = %s AND users.id = ratedlists.user_id AND shoes.id = ratedlists.shoe_id
 	  """, ((dist[i])[0],))
   shoe = c.fetchall()

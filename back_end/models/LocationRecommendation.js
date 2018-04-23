@@ -10,7 +10,7 @@ var LocationRecommendation = {
 				scriptPath: '../recommendation/',
 				args: [user_id]
 			};
-			PythonShell.run('weather.py', options, callback);
+			PythonShell.run('recommendWeather.py', options, callback);
 		});
     }
 };  

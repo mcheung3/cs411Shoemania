@@ -10,7 +10,7 @@ router.get('/:id', function(req, res, next) {
                 res.json(err);  
             } else {  
             	console.log("test3");
-                res.json(rows);  
+                res.json(JSON.parse(rows[rows.length-1]));  
             }  
      });   
 });  

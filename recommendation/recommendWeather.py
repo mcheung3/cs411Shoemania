@@ -5,7 +5,7 @@ import weather
 from weather import Weather, Unit
 from geopy.geocoders import Nominatim
 from geopy.distance import great_circle
-
+import json
 
 user = sys.argv[1]
 db=MySQLdb.connect(host="shoemaniadbinstance.chnenegb17td.us-east-2.rds.amazonaws.com", user="mcheung3",passwd="shoemania", db = "shoemania")
@@ -21,24 +21,38 @@ locs = c.fetchall()
 
 locs_form = []
 for i in locs:
-  locs_form.append((i[0],geolocator.geocode(i[1])))
+  code = geolocator.geocode(i[1])
+  if code == None:
+    code = geolocator.geocode("Urbana,Illinois")
+  locs_form.append((i[0], code))
 
 #Get location of user
 
 c.execute("SELECT id, location FROM users WHERE users.id =%s",(user,))
 user = c.fetchall()
 user_loc = geolocator.geocode((user[0])[0])
+#If user has not entered a location we assume they are from Urbana
+
+if user_loc==None:
+  user_loc = geolocator.geocode("Urbana,Illinois")
+
 user_strg = (user_loc.address.split(","))[0]
 user_w = weather.lookup_by_location(user_strg)
+if user_w == None:
+  user_w = weather.lookup_by_location("Urbana,Illinois")
+
 user_hum = user_w.atmosphere["humidity"]
 user_temp = user_w.condition.temp 
 
 #Calculate distance between other users and use custom weather forumla 
+
 dist = []
 for i in locs_form:
   if i[1] != "None":
     strg = (i[1].address.split(","))[0]
     w = weather.lookup_by_location(strg)
+    if w == None:
+      w = weather.lookup_by_location("Urbana,Illinois")
     #Get Humidity of location
     hum = w.atmosphere["humidity"]
     temp = w.condition.temp
@@ -47,6 +61,9 @@ for i in locs_form:
     temp_dist = 2*(int(user_temp)-int(temp))**2
     dist.append((i[0], d+hum_dist+temp_dist))
 
+##############################################################################################
+#   Final formula = 2*(difference in humidity)^2 + 2*(difference in temp)^2 + dist in miles  #
+##############################################################################################
 
 #Sort Distances
 dist.sort(key=lambda x: x[1])

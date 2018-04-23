@@ -8,7 +8,7 @@ router.get('/:id', function(req, res, next) {
             if (err) {  
                 res.json(err);  
             } else {  
-                res.json(JSON.parse(rows[0]));  
+                res.json(JSON.parse(rows[rows.length-1]));  
             }  
      });   
 });  

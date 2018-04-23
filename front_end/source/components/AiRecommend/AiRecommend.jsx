@@ -31,7 +31,7 @@ class AiRecommend extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://localhost:3000/aiRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+		axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/aiRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	handleBackClick(event) {
@@ -44,7 +44,7 @@ class AiRecommend extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://localhost:3000/aiRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+		axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/aiRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	renderData(){

@@ -29,7 +29,7 @@ class Location extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/users/name/' + localStorage.getItem('username') ).then(response => {console.log(response); this.setState({data: response})});
+		axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/users/name/' + localStorage.getItem('username') ).then(response => {console.log(response); this.setState({data: response})});
 	}
 
 	handleSubmit(event) {
@@ -48,7 +48,7 @@ class Location extends Component {
 		  }
 		};
 
-		axios.put('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/users/' + this.state.data.data[0].id, putData, axiosConfig)
+		axios.put('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/users/' + this.state.data.data[0].id, putData, axiosConfig)
 		.then((res) => {
 			this.setState({changed: true});
 		})

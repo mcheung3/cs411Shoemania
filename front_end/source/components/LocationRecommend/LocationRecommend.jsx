@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { Form, Grid, Image, Message, Segment } from 'semantic-ui-react'
-//import LinkedStateMixin from 'react-linked-state-adapter';
+import { Form, Grid, Image, Message, Segment, Loader, Dimmer  } from 'semantic-ui-react'
 import styles from './LocationRecommend.scss'
 import axios from 'axios'
 import { Redirect } from 'react-router'
@@ -32,7 +31,7 @@ class LocationRecommend extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://localhost:3000/personalRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+		axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/locationRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	handleBackClick(event) {
@@ -45,7 +44,7 @@ class LocationRecommend extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://localhost:3000/personalRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+		axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/locationRecommendation/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	renderData(){
@@ -67,6 +66,12 @@ class LocationRecommend extends Component {
 
 				</div>
 				);
+		}else{
+			return(
+				<div>      <Dimmer active>
+        <Loader>Loading</Loader>
+      </Dimmer> </div>
+				)
 		}
 
 	}

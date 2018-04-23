@@ -30,7 +30,7 @@ class Shoemania extends Component {
 			this.setState({redirect: true});
 			return;
 		}
-		axios.get('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
+		axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response})});
 	}
 
 	handleLikeClick(event) {
@@ -48,9 +48,9 @@ class Shoemania extends Component {
 		  }
 		};
 
-		axios.post('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/shoemania/', postData, axiosConfig)
+		axios.post('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/shoemania/', postData, axiosConfig)
 		.then((res) => {
-			axios.get('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response, addedToWL: false})});
+			axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response, addedToWL: false})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);
@@ -69,7 +69,7 @@ class Shoemania extends Component {
 		      "Access-Control-Allow-Origin": "*",
 		  }
 		};
-		axios.post('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/wishlist/', postData, axiosConfig)
+		axios.post('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/wishlist/', postData, axiosConfig)
 		.then((res) => {
 			this.setState({addedToWL: true});
 		})
@@ -93,9 +93,9 @@ class Shoemania extends Component {
 		      "Access-Control-Allow-Origin": "*",
 		  }
 		};
-		axios.post('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/shoemania/', postData, axiosConfig)
+		axios.post('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/shoemania/', postData, axiosConfig)
 		.then((res) => {
-			axios.get('http://ec2-13-59-119-199.us-east-2.compute.amazonaws.com:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response, addedToWL: false})});
+			axios.get('http://ec2-18-188-247-213.us-east-2.compute.amazonaws.com:3000/shoemania/' + localStorage.getItem('username') ).then(response => {this.setState({data: response, addedToWL: false})});
 		})
 		.catch((err) => {
 		  	console.log("AXIOS ERROR: ", err);
